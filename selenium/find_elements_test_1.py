@@ -1,7 +1,7 @@
 from selenium import webdriver
 import time
 
-url = " http://localhost/litecart/admin/"
+url = "http://localhost/litecart/admin/"
 
 browser = webdriver.Chrome()
 browser.implicitly_wait(1)
