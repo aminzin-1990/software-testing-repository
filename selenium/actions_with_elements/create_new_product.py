@@ -1,7 +1,5 @@
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
 from time import sleep
-from time import time
 import os
 
 
@@ -9,7 +7,6 @@ url = 'http://localhost/litecart/admin'
 browser = webdriver.Chrome()
 browser.implicitly_wait(3)
 browser.get(url)
-
 
 
 def authorization_to_admin_page(wb, url_link):
