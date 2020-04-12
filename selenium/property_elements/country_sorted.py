@@ -86,10 +86,11 @@ def country_zones_sort_step_2(wb, url_link):
     for i in countries_list_with_zone:
         zones_list = []
         browser.get(i)
-        zones_row = browser.find_elements_by_css_selector(".dataTable tr")
+        zones_row = browser.find_elements_by_xpath(".//*[@class='dataTable']/tbody/tr/td/"
+                                                   "select[contains(@name, 'zones[')]/"
+                                                   "option[@selected='selected' and not(@data-phone-code)]")
         for j in zones_row[1:len(zones_row)-1]:
-            column = j.find_elements_by_css_selector("td")
-            zones_list.append(column[2].text)
+            zones_list.append(j.text)
         sorted_zones_list = sorted(zones_list)
         if sorted_zones_list == zones_list:
             count_test += 1
