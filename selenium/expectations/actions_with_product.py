@@ -12,19 +12,23 @@ browser = webdriver.Chrome()
 try:
     browser.get(url)
 
+    # добавляем 3 продукта
     for i in range(3):
         ducks = browser.find_elements_by_css_selector(".products li")
+        # выбираем случайный продукт
         ducks[randint(0, len(ducks) - 1)].find_element_by_css_selector("a.link").click()
-
+        # если продукт по скидке надо выбрать поле "Size"
         if browser.find_elements_by_css_selector("#box-product .sale"):
             browser.find_element_by_tag_name("select").send_keys('Small')
+        # добавляем продукт в корзину
         browser.find_element_by_css_selector(".quantity [name='add_cart_product']").click()
+        # добавил слип, потому что появляются алерты
         sleep(1)
         alert = browser.switch_to.alert
         alert.accept()
-        wait = WebDriverWait(browser, 10)
+        wait = WebDriverWait(browser, 5)
         element = wait.until(
-            ec.text_to_be_present_in_element((By.XPATH, ".//*[ @ id = 'cart']//a//span[@class='quantity']"), str(i)))
+            ec.text_to_be_present_in_element((By.XPATH, ".//*[@id='cart']//a//span[@class='quantity']"), str(i)))
         browser.get(url)
 
     browser.get("http://localhost/litecart/en/checkout")
@@ -33,7 +37,7 @@ try:
     for i in range(len(count_in_basket)):
         browser.find_element_by_name('remove_cart_item').click()
 
-        wait = WebDriverWait(browser, 10)
+        wait = WebDriverWait(browser, 5)
         wait.until(ec.staleness_of(count_in_basket[0]))
 finally:
     browser.quit()
